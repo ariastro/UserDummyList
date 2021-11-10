@@ -1,9 +1,11 @@
 package io.astronout.usersdummyapp.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.astronout.usersdummyapp.databinding.ActivityMainBinding
+import io.astronout.usersdummyapp.ui.detail.DetailActivity
 import io.astronout.usersdummyapp.utils.showToast
 import io.astronout.usersdummyapp.vo.Status
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,7 +35,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAdapter() {
         adapter = UserAdapter {
-
+            startActivity(Intent(this, DetailActivity::class.java).apply {
+                putExtra(DetailActivity.EXTRA_USER, it)
+            })
         }
     }
 
