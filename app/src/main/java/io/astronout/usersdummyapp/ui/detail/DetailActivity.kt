@@ -32,8 +32,8 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.imgAvatar)
         binding.tvId.text = "Id: ${user.id}"
         binding.tvEmail.text = "Email: ${user.email}"
-        binding.tvFirstName.text = "Id: ${user.firstName}"
-        binding.tvLastName.text = "Id: ${user.lastName}"
+        binding.tvFirstName.text = "First name: ${user.firstName}"
+        binding.tvLastName.text = "Last name: ${user.lastName}"
     }
 
     override fun onDestroy() {
