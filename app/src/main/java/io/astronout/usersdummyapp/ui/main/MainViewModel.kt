@@ -10,8 +10,9 @@ import io.astronout.usersdummyapp.vo.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import javax.inject.Inject
 
-class MainViewModel(private val iRepository: IRepository): ViewModel() {
+class MainViewModel @Inject constructor(private val iRepository: IRepository): ViewModel() {
 
     private val _users = MutableLiveData<Resource<GetUsersResponse>>()
     val users: LiveData<Resource<GetUsersResponse>>

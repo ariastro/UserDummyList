@@ -1,7 +1,5 @@
 package io.astronout.usersdummyapp.di.module
 
-import io.astronout.usersdummyapp.data.IRepository
-import io.astronout.usersdummyapp.data.RepositoryImpl
 import io.astronout.usersdummyapp.data.source.remote.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

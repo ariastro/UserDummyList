@@ -4,20 +4,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import dagger.android.AndroidInjection
 import io.astronout.usersdummyapp.databinding.ActivityMainBinding
 import io.astronout.usersdummyapp.ui.detail.DetailActivity
 import io.astronout.usersdummyapp.utils.showToast
 import io.astronout.usersdummyapp.vo.Status
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by viewModel()
+    @Inject lateinit var viewModel: MainViewModel
     private lateinit var adapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
