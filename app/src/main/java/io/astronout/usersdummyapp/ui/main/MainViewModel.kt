@@ -20,17 +20,19 @@ class MainViewModel @Inject constructor(private val iRepository: IRepository): V
 
     fun getUsers() {
         viewModelScope.launch(Dispatchers.IO) {
-            _users.postValue(Resource.loading(null))
+            _users.postValue(Resource.Loading())
             try {
                 iRepository.getUsers().let {
                     if (it.isSuccessful) {
-                        _users.postValue(Resource.success(it.body()))
+                        it.body()?.let { body ->
+                            _users.postValue(Resource.Success(body))
+                        }
                     } else {
-                        _users.postValue(Resource.error(it.errorBody().toString(), null))
+                        _users.postValue(Resource.Error(it.errorBody().toString()))
                     }
                 }
             } catch (e: Exception) {
-                _users.postValue(Resource.error(e.message.toString(), null))
+                _users.postValue(Resource.Error(e.message.toString()))
             }
         }
     }

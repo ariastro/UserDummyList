@@ -8,7 +8,9 @@ import dagger.android.AndroidInjection
 import io.astronout.usersdummyapp.databinding.ActivityMainBinding
 import io.astronout.usersdummyapp.ui.detail.DetailActivity
 import io.astronout.usersdummyapp.utils.showToast
-import io.astronout.usersdummyapp.vo.Status
+import io.astronout.usersdummyapp.utils.toGone
+import io.astronout.usersdummyapp.utils.toVisible
+import io.astronout.usersdummyapp.vo.Resource
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -45,17 +47,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun observer() {
         viewModel.users.observe(this) {
-            when(it.status) {
-                Status.SUCCESS -> {
-                    val users = it.data?.data
-                    Log.d("USERS", "observer: ${it.data?.data}")
-                    adapter.submitList(users)
-                }
-                Status.ERROR -> {
-                    showToast(it.message.toString())
-                }
-                Status.LOADING -> {
-
+            with(binding) {
+                when(it) {
+                    is Resource.Error -> {
+                        progressBar.toGone()
+                        showToast(it.message.toString())
+                    }
+                    is Resource.Loading -> {
+                        progressBar.toVisible()
+                        rvUser.toGone()
+                    }
+                    is Resource.Success -> {
+                        progressBar.toGone()
+                        rvUser.toVisible()
+                        val users = it.data?.data
+                        Log.d("USERS", "observer: ${it.data?.data}")
+                        adapter.submitList(users)
+                    }
                 }
             }
         }
